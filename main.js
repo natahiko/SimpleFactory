@@ -1,4 +1,4 @@
-import { Factory } from './factory'
+Factory = require('./factoryModule/factory')
 
 let factory = new Factory();
 
@@ -20,5 +20,5 @@ setInterval(() => {
     varnish: 10
   }]
 
-  factory.appendKit(kits);
-}, 100)
+  factory.appendKits(kits);
+}, 2000)

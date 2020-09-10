@@ -1,34 +1,42 @@
-import FactoryDepartment from './department'
+const FactoryDepartment = require('./department')
+const materialStore = require('./storages/materials')
+const defectStore = require('./storages/defect')
+const productStore = require('./storages/readyProducts')
 
-const kitsJSONFile = './kits.json'
+class Factory {
 
-export default class Factory {
+  data = require('./source/kits.json')
+
   constructor() {
-    let data
-    fetch(kitsJSONFile)
-      .then(response => response.json())
-      .then(jsonResponse => data = jsonResponse)
+    this.materialStore = new materialStore(this.data)
+    this.defectStore = new defectStore()
+    this.readyStore = new productStore(Object.keys(this.data))
 
     this.departments = {}
-    for (const [key, value] of Object.entries(data)) {
-      this.departments[value] = new FactoryDepartment(key, value)
+    for (const [key, value] of Object.entries(this.data)) {
+      this.departments[key] = new FactoryDepartment(key, value, this.materialStore, this.readyStore)
     }
 
-    this.defectStorage = []
+    console.log('Factory created')
   }
 
-  appendKit(kits) {
-    kits.forEach(kit => function () {
-        const department = this.departments[kit]
-        if (department == undefined)
-          this.defectStorage.push(kit)
-        else{
-          department.addKit(kit)
-          if (!department.isWorking())
-            department.start()
-        }
-      },
-    )
+  appendKits(kits) {
+    kits.forEach(kit => this.__appendKit(kit))
+    console.log('Kits appended')
+    console.log(this.materialStore.getAll())
+
+  }
+
+  __appendKit(kit) {
+    const departmentName = this.materialStore.add(kit)
+    console.log(departmentName)
+    if (departmentName === undefined)
+      this.defectStore.add(kit)
+    else {
+      this.departments[departmentName].checkForWorking()
+    }
   }
 
 }
+
+module.exports = Factory
