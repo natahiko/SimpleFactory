@@ -1,14 +1,10 @@
 class Storage {
   constructor() {
-    if (!!Storage.instance) {
-      return Storage.instance
-    }
-    Storage.instance = this
-
     this.storage = {}
   }
 
-  add(kit);
+  add(kit) {
+  }
 
   //used for debugging
   getAll() {

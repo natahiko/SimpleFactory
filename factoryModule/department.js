@@ -1,13 +1,14 @@
+const MaterialsStore = require('./storages/MaterialsStorage')
+const ProductsStore = require('./storages/ProductsStorage')
+
 class FactoryDepartment {
 
-  constructor(name, kit, materialStore, readyStore) {
+  constructor(name, kit, workingTime = 100) {
     this.name = name
     this.kit = kit
-    this.materialStore = materialStore
-    this.readyStore = readyStore
-
-    //common for all department
-    this.workingTime = 100
+    this.materialStore = new MaterialsStore()
+    this.readyStore = new ProductsStore()
+    this.workingTime = workingTime
 
     console.log(`Department ${this.name} created`)
   }
@@ -23,10 +24,9 @@ class FactoryDepartment {
       } catch (e) {
         //return materials that we get
         this.materialStore.add(this.kit)
-        //restart in case of exseption
+        //restart in case of exception
         clearInterval(workInterval)
         this.start()
-        console.log('EXCEPTION')
       }
     }, this.workingTime)
   }
@@ -37,6 +37,10 @@ class FactoryDepartment {
 
     this.readyStore.add(this.name)
     console.log(`One ${this.name} created`)
+  }
+
+  getKitType() {
+    return this.kit
   }
 }
 

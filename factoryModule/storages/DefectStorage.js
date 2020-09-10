@@ -1,10 +1,16 @@
-const Storage = require('./StorageInterface')
+const Storage = require('./IStorage')
 
 class DefectStorage extends Storage {
 
   constructor() {
+    if (!!DefectStorage.instance) {
+      return DefectStorage.instance
+    }
     super()
+    DefectStorage.instance = this
+
     this.storage.defects = []
+    return this
   }
 
   add(kit) {

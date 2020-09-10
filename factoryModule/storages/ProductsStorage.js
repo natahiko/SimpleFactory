@@ -1,10 +1,16 @@
-const Storage = require('./StorageInterface')
+const Storage = require('./IStorage')
 
 class ProductsStorage extends Storage {
 
   constructor(products) {
+    if (!!ProductsStorage.instance) {
+      return ProductsStorage.instance
+    }
     super()
+    ProductsStorage.instance = this
+
     products.forEach(product => this.storage[product] = 0)
+    return this
   }
 
   add(product) {
