@@ -35,8 +35,6 @@ class Factory {
       else
         this.materialStore.add(type)
     })
-    console.log('Kits appended')
-
   }
 
   __getType(kit) {
@@ -53,13 +51,11 @@ class Factory {
 
 
   __compare(kit1, kit2) {
-    const keys = Object.keys(kit1)
-    for (let i = 0; i < keys.length; i++) {
-
-      if (kit1[keys[i]] !== kit2[keys[i]]) {
+    const keys = Object.keys(kit1).forEach(key => {
+      if (kit1[key] !== kit2[key]) {
         return false
       }
-    }
+    })
     return true
   }
 

@@ -23,7 +23,7 @@ class FactoryDepartment {
           this.create(materials)
       } catch (e) {
         //return materials that we get
-        this.materialStore.add(this.kit)
+        this.materialStore.add(this.name)
         //restart in case of exception
         clearInterval(workInterval)
         this.start()

@@ -25,7 +25,7 @@ class MaterialsStorage extends Storage {
 
   get(name) {
     const amount = this.storage[name].amount
-    if (amount === undefined)
+    if (!amount)
       throw `No details with ${name} type`
     if (amount <= 0)
       return false
