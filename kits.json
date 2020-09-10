@@ -1,0 +1,21 @@
+{
+  "window": {
+    "plastic": 10,
+    "glass": 90
+  },
+  "door": {
+    "wood": 70,
+    "plastic": 5,
+    "glass": 25
+  },
+  "wallpaper": {
+    "paper": 90,
+    "glue": 10
+  },
+  "tile": {
+    "clay": 70,
+    "sand": 10,
+    "quartz": 10,
+    "varnish": 10
+  }
+}
