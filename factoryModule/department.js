@@ -8,36 +8,36 @@ class FactoryDepartment {
 
     //common for all department
     this.workingTime = 100
-    this.store = []
-    this.working = false
 
     console.log(`Department ${this.name} created`)
   }
 
   async start() {
-    this.working = true
     // console.log(`Department ${this.name} start working`)
 
-    const interval = setInterval(() => {
+    const workInterval = setInterval(() => {
       try {
-        this.materialStore.get(this.name)
-
-        console.log(`One ${this.name} created`)
-        this.readyStore.add(this.name)
+        let materials = this.materialStore.get(this.name)
+        if (materials)
+          this.create(materials)
       } catch (e) {
-        clearInterval(interval)
-        this.working = false
-        // console.log(`Department ${this.name} have no details`)
+        //return materials that we get
+        this.materialStore.add(this.kit)
+        //restart in case of exseption
+        clearInterval(workInterval)
+        this.start()
+        console.log('EXCEPTION')
       }
     }, this.workingTime)
   }
 
-  // if don't working should start
-  checkForWorking() {
-    if (!this.working)
-      this.start()
-  }
+  create(materials) {
+    if (Math.random() < 0.05)
+      throw `Internal error`
 
+    this.readyStore.add(this.name)
+    console.log(`One ${this.name} created`)
+  }
 }
 
 module.exports = FactoryDepartment

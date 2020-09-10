@@ -1,11 +1,17 @@
-class materialStorage {
+const Storage = require('./StorageInterface')
+
+class MaterialsStorage extends Storage {
 
   constructor(data) {
-    this.storage = {}
+    super()
     Object.keys(data).forEach(key => this.storage[key] = {
       amount: 0,
       type: data[key],
     })
+  }
+
+  hasMaterials(name) {
+    return this.storage[name].amount > 0
   }
 
   //  check kit for department type
@@ -34,18 +40,15 @@ class materialStorage {
     return true
   }
 
-  //used for debugging
-  getAll() {
-    return this.storage
-  }
-
   get(name) {
     const amount = this.storage[name].amount
-    if (amount <= 0 || amount === undefined)
-      throw `No details for ${name} department`
+    if (amount === undefined)
+      throw `No details with ${name} type`
+    if (amount <= 0)
+      return false
     this.storage[name].amount = (amount - 1)
-    return true
+    return this.storage[name].type
   }
 }
 
-module.exports = materialStorage
+module.exports = MaterialsStorage

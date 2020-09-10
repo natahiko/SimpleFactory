@@ -1,7 +1,9 @@
-class productStorage {
+const Storage = require('./StorageInterface')
+
+class ProductsStorage extends Storage {
 
   constructor(products) {
-    this.storage = {}
+    super()
     products.forEach(product => this.storage[product] = 0)
   }
 
@@ -9,14 +11,9 @@ class productStorage {
     this.storage[product] += 1
   }
 
-  //used for debugging
-  getAll() {
-    return this.storage
-  }
-
   get(product) {
     return this.storage[product]
   }
 }
 
-module.exports = productStorage
+module.exports = ProductsStorage

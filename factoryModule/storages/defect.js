@@ -1,17 +1,16 @@
-class defectStorage {
+const Storage = require('./StorageInterface')
+
+class DefectStorage extends Storage {
 
   constructor() {
-    this.storage = []
+    super()
+    this.storage.defects = []
   }
 
   add(kit) {
-    this.storage.push(kit)
+    this.storage.defects.push(kit)
   }
 
-  //used for debugging
-  getAll() {
-    return this.storage
-  }
 }
 
-module.exports = defectStorage
+module.exports = DefectStorage
